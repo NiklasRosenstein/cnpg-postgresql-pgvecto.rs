@@ -2,8 +2,10 @@
 ARG BASE_IMAGE
 FROM ghcr.io/cloudnative-pg/postgresql:${BASE_IMAGE}
 
-USER root
+ARG BASE_IMAGE
 ARG PGVECTORS_VERSION
+
+USER root
 RUN <<EOF
     set -e
     if [ -z "${VECTORS_ARCH:-}" ] && [ $(dpkg --print-architecture) = "amd64" ]; then
