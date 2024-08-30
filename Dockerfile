@@ -1,11 +1,8 @@
-ARG PG_MAJOR=15
-ARG PJ_MINOR=5
-
-FROM ghcr.io/cloudnative-pg/postgresql:${PG_MAJOR}.${PJ_MINOR}}-debian
+ARG BASE_IMAGE
+FROM ghcr.io/cloudnative-pg/postgresql:${BASE_IMAGE}
 USER root
 
-# https://github.com/tensorchord/pgvecto.rs/releases/tag/v0.2.1
-ARG VECTORS_VERSION=0.2.1
+ARG PGVECTORS_VERSION
 RUN <<EOF
     set -e
     if [ -z "${VECTORS_ARCH:-}" ] && [ $(dpkg --print-architecture) = "amd64" ]; then
@@ -17,7 +14,7 @@ RUN <<EOF
         exit 1
     fi
     apt update && apt install -y wget
-    wget -nv -O vectors.deb https://github.com/tensorchord/pgvecto.rs/releases/download/v${VECTORS_VERSION}/vectors-pg${PG_MAJOR}_${VECTORS_VERSION}_$(dpkg --print-architecture).deb
+    wget -nv -O vectors.deb https://github.com/tensorchord/pgvecto.rs/releases/download/v${BASE_IMAGE%%[^0-9]*}"/vectors-pg${PG_MAJOR}_${PGVECTORS_VERSION}_$(dpkg --print-architecture).deb
     dpkg -i vectors.deb
     rm vectors.deb
     apt remove -y wget

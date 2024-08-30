@@ -10,19 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - PJ_MAJOR: 14
-            PJ_MINOR: 13
-            VECTORS_VERSION: 0.2.1
-          - PJ_MAJOR: 15
-            PJ_MINOR: 5
-            VECTORS_VERSION: 0.2.1
-          - PJ_MAJOR: 15
-            PJ_MINOR: 8
-            VECTORS_VERSION: 0.2.1
-          - PJ_MAJOR: 16
-            PJ_MINOR: 4
-            VECTORS_VERSION: 0.2.1
+        BASE_IMAGE: [14.13-debian, 15.5-debian, 15.8-debian, 16.4-debian]
+        PGVECTORS_VERSION: ["0.2.1"] # https://github.com/tensorchord/pgvecto.rs/releases/tag/v0.2.1
 
     steps:
       - name: Checkout code
@@ -43,7 +32,10 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs:${{ matrix.PJ_MAJOR }}.${{ matrix.PJ_MINOR }}-pgvect.rs-${{ matrix.VECTORS_VERSION }}
-          cache-to: type=registry,ref=ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs/cache:${{ matrix.PJ_MAJOR }}.${{ matrix.PJ_MINOR }}-pgvect.rs-${{ matrix.VECTORS_VERSION }},mode=max
-          cache-from: type=registry,ref=ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs/cache:${{ matrix.PJ_MAJOR }}.${{ matrix.PJ_MINOR }}-pgvect.rs-${{ matrix.VECTORS_VERSION }}
+          tags: ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs:${{ matrix.BASE_IMAGE }}-pgvectors-${{ matrix.PGVECTORS_VERSION }}}
+          cache-to: type=registry,ref=ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs/cache:${{ matrix.BASE_IMAGE }}-pgvectors-${{ matrix.PGVECTORS_VERSION }}},mode=max
+          cache-from: type=registry,ref=ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs/cache:${{ matrix.BASE_IMAGE }}-pgvectors-${{ matrix.PGVECTORS_VERSION }}}
           platforms: linux/amd64,linux/arm64
+          args: |
+            BASE_IMAGE=${{ matrix.BASE_IMAGE }}
+            PGVECTORS_VERSION=${{ matrix.PGVECTORS_VERSION }}
