@@ -12,7 +12,7 @@ RUN <<EOF
     elif [ -z "${VECTORS_ARCH:-}" ] && [ $(dpkg --print-architecture) = "arm64" ]; then
         VECTORS_ARCH=aarch64
     else
-        >&2 echo "Unsupported architectureL: $(dpkg --print-architecture)"
+        >&2 echo "Unsupported architecture: $(dpkg --print-architecture)"
         exit 1
     fi
     wget -nv -O vectors.deb https://github.com/tensorchord/pgvecto.rs/releases/download/v${PGVECTORS_VERSION}/vectors-pg${BASE_IMAGE%%[^0-9]*}_${PGVECTORS_VERSION}_$(dpkg --print-architecture).deb
