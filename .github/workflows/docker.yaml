@@ -36,6 +36,6 @@ jobs:
           cache-to: type=registry,ref=ghcr.io/niklasrosenstein/cnpg-postgresql-pgvectors/cache:${{ matrix.BASE_IMAGE }}-pgvectors-${{ matrix.PGVECTORS_VERSION }},mode=max
           cache-from: type=registry,ref=ghcr.io/niklasrosenstein/cnpg-postgresql-pgvectors/cache:${{ matrix.BASE_IMAGE }}-pgvectors-${{ matrix.PGVECTORS_VERSION }}
           platforms: linux/amd64,linux/arm64
-          args: |
+          build-args: |
             BASE_IMAGE=${{ matrix.BASE_IMAGE }}
             PGVECTORS_VERSION=${{ matrix.PGVECTORS_VERSION }}
