@@ -1,11 +1,10 @@
-# See https://github.com/cloudnative-pg/postgres-containers/pkgs/container/postgresql
 ARG BASE_IMAGE
-FROM ghcr.io/cloudnative-pg/postgresql:${BASE_IMAGE}
 
+FROM ubuntu AS downloader
+RUN apt-get update && apt-get install wget -y
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG BASE_IMAGE
 ARG PGVECTORS_VERSION
-
-USER root
 RUN <<EOF
     set -e
     if [ -z "${VECTORS_ARCH:-}" ] && [ $(dpkg --print-architecture) = "amd64" ]; then
@@ -16,11 +15,12 @@ RUN <<EOF
         >&2 echo "Unsupported architectureL: $(dpkg --print-architecture)"
         exit 1
     fi
-    apt update && apt install -y wget
-    wget -nv -O vectors.deb https://github.com/tensorchord/pgvecto.rs/releases/download/v${BASE_IMAGE%%[^0-9]*}/vectors-pg${PG_MAJOR}_${PGVECTORS_VERSION}_$(dpkg --print-architecture).deb
-    dpkg -i vectors.deb
-    rm vectors.deb
-    apt remove -y wget
+    wget -nv -O vectors.deb https://github.com/tensorchord/pgvecto.rs/releases/download/v${PGVECTORS_VERSION}/vectors-pg${BASE_IMAGE%%[^0-9]*}_${PGVECTORS_VERSION}_$(dpkg --print-architecture).deb
 EOF
 
+# See https://github.com/cloudnative-pg/postgres-containers/pkgs/container/postgresql
+FROM ghcr.io/cloudnative-pg/postgresql:${BASE_IMAGE}
+
+USER root
+RUN --mount=type=bind,from=downloader,source=/vectors.deb,target=/vectors.deb dpkg -i /vectors.deb
 USER postgres
