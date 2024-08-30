@@ -15,7 +15,7 @@ RUN <<EOF
         exit 1
     fi
     apt update && apt install -y wget
-    wget -nv -O vectors.deb https://github.com/tensorchord/pgvecto.rs/releases/download/v${BASE_IMAGE%%[^0-9]*}"/vectors-pg${PG_MAJOR}_${PGVECTORS_VERSION}_$(dpkg --print-architecture).deb
+    wget -nv -O vectors.deb https://github.com/tensorchord/pgvecto.rs/releases/download/v${BASE_IMAGE%%[^0-9]*}/vectors-pg${PG_MAJOR}_${PGVECTORS_VERSION}_$(dpkg --print-architecture).deb
     dpkg -i vectors.deb
     rm vectors.deb
     apt remove -y wget
