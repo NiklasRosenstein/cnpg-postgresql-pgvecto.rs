@@ -43,7 +43,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs:${{ matrix.PJ_MAJOR }}.${{ matrix.PJ_MINOR }}+pgvect.rs-${{ matrix.VECTORS_VERSION }}
-          cache-to: type=registry,ref=ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs/cache:${{ matrix.PJ_MAJOR }}.${{ matrix.PJ_MINOR }}+pgvect.rs-${{ matrix.VECTORS_VERSION }},mode=max
-          cache-from: type=registry,ref=ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs/cache:${{ matrix.PJ_MAJOR }}.${{ matrix.PJ_MINOR }}+pgvect.rs-${{ matrix.VECTORS_VERSION }}
+          tags: ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs:${{ matrix.PJ_MAJOR }}.${{ matrix.PJ_MINOR }}-pgvect.rs-${{ matrix.VECTORS_VERSION }}
+          cache-to: type=registry,ref=ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs/cache:${{ matrix.PJ_MAJOR }}.${{ matrix.PJ_MINOR }}-pgvect.rs-${{ matrix.VECTORS_VERSION }},mode=max
+          cache-from: type=registry,ref=ghcr.io/niklasrosenstein/cnpg-postgresql-pgvecto.rs/cache:${{ matrix.PJ_MAJOR }}.${{ matrix.PJ_MINOR }}-pgvect.rs-${{ matrix.VECTORS_VERSION }}
           platforms: linux/amd64,linux/arm64
