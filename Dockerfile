@@ -1,7 +1,8 @@
+# See https://github.com/cloudnative-pg/postgres-containers/pkgs/container/postgresql
 ARG BASE_IMAGE
 FROM ghcr.io/cloudnative-pg/postgresql:${BASE_IMAGE}
-USER root
 
+USER root
 ARG PGVECTORS_VERSION
 RUN <<EOF
     set -e

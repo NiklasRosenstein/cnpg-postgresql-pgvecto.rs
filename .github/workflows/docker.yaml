@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        BASE_IMAGE: [14.13-debian, 15.5-debian, 15.8-debian, 16.4-debian]
+        BASE_IMAGE: [14.13-bookworm, 15.5-debian, 15.8-bookworm, 16.4-bookworm]
         PGVECTORS_VERSION: ["0.2.1"] # https://github.com/tensorchord/pgvecto.rs/releases/tag/v0.2.1
 
     steps:
