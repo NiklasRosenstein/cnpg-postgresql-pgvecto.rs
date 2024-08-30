@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     strategy:
       matrix:
         BASE_IMAGE: [14.13-bookworm, 15.5-debian, 15.8-bookworm, 16.4-bookworm]
