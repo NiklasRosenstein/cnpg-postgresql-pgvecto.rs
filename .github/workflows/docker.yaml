@@ -10,18 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        - PJ_MAJOR: 14
-          PJ_MINOR: 13
-          VECTORS_VERSION: 0.2.1
-        - PJ_MAJOR: 15
-          PJ_MINOR: 5
-          VECTORS_VERSION: 0.2.1
-        - PJ_MAJOR: 15
-          PJ_MINOR: 8
-          VECTORS_VERSION: 0.2.1
-        - PJ_MAJOR: 16
-          PJ_MINOR: 4
-          VECTORS_VERSION: 0.2.1
+        include:
+          - PJ_MAJOR: 14
+            PJ_MINOR: 13
+            VECTORS_VERSION: 0.2.1
+          - PJ_MAJOR: 15
+            PJ_MINOR: 5
+            VECTORS_VERSION: 0.2.1
+          - PJ_MAJOR: 15
+            PJ_MINOR: 8
+            VECTORS_VERSION: 0.2.1
+          - PJ_MAJOR: 16
+            PJ_MINOR: 4
+            VECTORS_VERSION: 0.2.1
 
     steps:
       - name: Checkout code
